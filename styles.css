@@ -447,4 +447,3 @@ body.quick [data-deep] { display: none !important; }
 .hero + .sec:not(.soft):not(.dark):not(.deep), .sec:not(.soft):not(.dark):not(.deep) + .sec:not(.soft):not(.dark):not(.deep) { position: relative; }
 .hero + .sec:not(.soft):not(.dark):not(.deep)::before, .sec:not(.soft):not(.dark):not(.deep) + .sec:not(.soft):not(.dark):not(.deep)::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: min(1320px, 100% - 48px); height: 1px; background: var(--hair); }
 @media (max-width: 720px) { .hero + .sec:not(.soft):not(.dark):not(.deep)::before, .sec:not(.soft):not(.dark):not(.deep) + .sec:not(.soft):not(.dark):not(.deep)::before { width: calc(100% - 32px); } }
-.hook-moves .mv-data dd { font-family: var(--mono, "Space Mono", monospace); font-size: .82em; line-height: 1.55; }
