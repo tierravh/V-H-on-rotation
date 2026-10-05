@@ -17,7 +17,7 @@ body { margin: 0; background: var(--white); color: var(--black); font: 400 16px/
 img { max-width: 100%; display: block; }
 a { color: inherit; }
 button { font: inherit; color: inherit; cursor: pointer; }
-.skip { position: absolute; left: -999px; } .skip:focus { left: 12px; top: 12px; z-index: 99; background: var(--black); color: var(--white); padding: 8px 12px; }
+.skiplink { position: absolute; left: -999px; } .skiplink:focus { left: 12px; top: 12px; z-index: 99; background: var(--black); color: var(--white); padding: 8px 12px; }
 .wrap { width: min(1320px, 100% - 48px); margin-inline: auto; }
 h1, h2, h3 { font-family: var(--head); font-weight: 400; text-transform: uppercase; margin: 0; letter-spacing: -.01em; }
 h1 { font-size: clamp(44px, 7.4vw, 96px); line-height: .92; }
