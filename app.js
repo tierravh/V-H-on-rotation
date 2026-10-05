@@ -156,16 +156,44 @@
     });
     const r = $("#receipt");
     if (!where && !team && !state.v) {
-      r.innerHTML = `<p><b>How this works.</b> Pick a city to narrow every section to that market. Pick a team to see only your moves under each hook, plus your lines in the Reel and Studio Kit. Each section header shows what it's filtered to.</p>`;
+      r.innerHTML = "";
       r.classList.remove("on");
     } else {
       const label = [where && CITY_NAME[state.city] === "national" ? "National" : where && CITY_NAME[state.city], state.v && vname(state.v), team].filter(Boolean).join(" + ");
       const NOUN = { hooks: ["hook", "hooks"], charts: ["chart trend", "chart trends"], headphones: ["listen", "listens"], dates: ["date", "dates"] };
       const line = ["hooks", "charts", "headphones", "dates"].map((k) => `${c[k][0]} ${NOUN[k][c[k][0] === 1 ? 0 : 1]}`).join(", ");
-      r.innerHTML = `<p><b>Showing ${esc(label)}.</b> ${line}.${team ? ` Hooks now show only ${esc(team)} moves.` : ""}</p><button type="button" id="resetAll">RESET</button>`;
+      r.innerHTML = `<p><b>Showing ${esc(label)}.</b> ${line}.${team ? ` Hooks now show only ${esc(team)} moves.` : ""}</p>`;
       r.classList.add("on");
-      $("#resetAll").addEventListener("click", () => { state.city = "all"; state.lens = "all"; state.v = null; renderAll(true); });
     }
+  }
+
+
+  /* ---------- header menus ---------- */
+  function setOpen(btn, open) {
+    const p = document.getElementById(btn.getAttribute("aria-controls"));
+    btn.setAttribute("aria-expanded", String(open)); p.hidden = !open;
+  }
+  $$(".dd-btn").forEach((b) => b.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const open = b.getAttribute("aria-expanded") !== "true";
+    $$(".dd-btn").forEach((o) => setOpen(o, false));
+    setOpen(b, open);
+  }));
+  $$(".dd-panel").forEach((p) => p.addEventListener("click", (e) => e.stopPropagation()));
+  document.addEventListener("click", () => $$(".dd-btn").forEach((o) => setOpen(o, false)));
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") $$(".dd-btn").forEach((o) => setOpen(o, false)); });
+  $$("#secPanel a").forEach((a) => a.addEventListener("click", () => setOpen($("#secBtn"), false)));
+  $("#fpDone").addEventListener("click", () => setOpen($("#filtBtn"), false));
+  $("#clearBtn").addEventListener("click", () => { state.city = "all"; state.lens = "all"; state.v = null; state.mode = "full"; renderAll(true); });
+  function renderSummary() {
+    const bits = [];
+    if (state.city !== "all") bits.push(state.city === "nat" ? "NATIONAL" : CITY_NAME[state.city].toUpperCase());
+    if (state.v) bits.push(vname(state.v).toUpperCase());
+    if (state.lens !== "all") bits.push(TEAM_NAME[state.lens].toUpperCase());
+    if (state.mode === "quick") bits.push("QUICK HIT");
+    $("#filtNow").textContent = bits.length ? bits.join(" / ") : "EVERYTHING";
+    $("#filtBtn").classList.toggle("active", bits.length > 0);
+    $("#clearBtn").hidden = !bits.length;
   }
 
   /* ---------- hero ---------- */
@@ -364,15 +392,15 @@
 
   /* ---------- nav ---------- */
   function navSpy() {
-    const links = $$(".nav a");
+    const links = $$("#secPanel a");
     const io = new IntersectionObserver((ents) => {
-      ents.forEach((e) => { if (e.isIntersecting) links.forEach((a) => a.classList.toggle("on", a.dataset.nav === e.target.dataset.sec)); });
+      ents.forEach((e) => { if (e.isIntersecting) { links.forEach((a) => { const on = a.dataset.nav === e.target.dataset.sec; a.classList.toggle("on", on); if (on) $("#secNow").textContent = a.textContent.trim(); }); } });
     }, { rootMargin: "-40% 0px -55% 0px" });
     $$("[data-sec]").forEach((s) => io.observe(s));
   }
 
   function renderAll(changed) {
-    renderControls(); renderBoard(); renderHooks(); renderReel(); renderMotion(); renderCharts(); renderSides(); renderHeadphones(); renderKit(); renderDates(); renderScope(changed);
+    renderControls(); renderBoard(); renderHooks(); renderReel(); renderMotion(); renderCharts(); renderSides(); renderHeadphones(); renderKit(); renderDates(); renderScope(changed); renderSummary();
   }
   renderHero(); renderLiner(); renderAll(); navSpy();
 })();

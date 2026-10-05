@@ -473,3 +473,58 @@ body.quick [data-deep] { display: none !important; }
 @media (max-width: 760px) { .receipt { padding: 10px 16px; font-size: 12px; } .controls .seg[data-label]::before { display: none; } }
 @media (prefers-reduced-motion: reduce) { .scope.pulse { animation: none; } }
 .reel-note { grid-column: 1 / -1; margin: 0 0 8px; font-size: 15px; color: var(--g6); }
+
+/* ---------- streamlined header ---------- */
+.tuned { display: none !important; }
+.tools { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.dd { position: relative; }
+.dd-btn { display: inline-flex; align-items: center; gap: 10px; height: 34px; padding: 0 12px; border: 1px solid var(--black); background: var(--white); color: var(--black); font: 700 11px/1 var(--mono); letter-spacing: .1em; cursor: pointer; white-space: nowrap; }
+.dd-btn .dd-k { color: var(--g6); font-size: 10px; letter-spacing: .12em; }
+.dd-btn .car { width: 7px; height: 7px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .2s; }
+.dd-btn[aria-expanded="true"] .car { transform: translateY(2px) rotate(-135deg); }
+.dd-btn:hover { background: var(--soft); }
+.dd-btn.active { background: var(--hook); border-color: var(--hook); color: var(--white); }
+.dd-btn.active .dd-k { color: rgba(255,255,255,.75); }
+.dd-btn .mini { display: none; width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle, var(--white) 0 9%, var(--deep) 10% 32%, var(--black) 33% 36%, transparent 37%), repeating-radial-gradient(circle, #0c0c0b 0 1px, #262624 1px 2px); animation: spin 1.8s linear infinite; }
+.dd-btn.active .mini { display: inline-block; }
+.dd-panel { position: absolute; top: calc(100% + 8px); right: 0; z-index: 60; background: var(--white); border: 1px solid var(--black); box-shadow: 0 18px 40px rgba(12,12,11,.14); }
+.dd-panel[hidden] { display: none; }
+.sec-panel { width: 240px; padding: 6px 0; display: flex; flex-direction: column; }
+.sec-panel a { display: flex; gap: 12px; padding: 9px 16px; font: 700 11px/1 var(--mono); letter-spacing: .1em; text-decoration: none; color: var(--black); }
+.sec-panel a span { color: var(--g5); width: 18px; }
+.sec-panel a:hover { background: var(--soft); }
+.sec-panel a.on { color: var(--hook); }
+.sec-panel a.on span { color: var(--hook); }
+body.quick .sec-panel a[data-deep] { display: none; }
+.filt-panel { width: min(560px, calc(100vw - 32px)); padding: 6px 20px 16px; }
+.fp-row { padding: 14px 0; border-bottom: 1px solid var(--hair); }
+.fp-k { margin: 0 0 4px; font: 700 10px/1 var(--mono); letter-spacing: .14em; }
+.fp-h { margin: 0 0 10px; font-size: 13px; color: var(--g6); }
+.filt-panel .seg { flex-wrap: wrap; }
+.filt-panel .receipt { position: static; margin: 0; padding: 12px 0 0; background: none; color: var(--black); border: 0; font-size: 13px; }
+.filt-panel .receipt:empty { visibility: hidden; }
+.filt-panel .receipt.on { background: none; color: var(--black); }
+.clear-btn { height: 34px; padding: 0 10px; border: 0; background: none; font: 700 10px/1 var(--mono); letter-spacing: .12em; color: var(--g6); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.clear-btn:hover { color: var(--black); }
+.clear-btn[hidden] { display: none; }
+@media (max-width: 760px) {
+  .top-row { flex-wrap: nowrap; }
+  .brand-name, .fpo { display: none; }
+  .tools { gap: 6px; }
+  .dd-btn { padding: 0 9px; gap: 7px; }
+  .dd-btn .dd-k { display: none; }
+  #filtNow { max-width: 130px; overflow: hidden; text-overflow: ellipsis; }
+  .dd { position: static; }
+  .dd-panel { left: 16px; right: 16px; width: auto; top: 100%; }
+  .sec-panel { width: auto; }
+}
+.filt-panel .seg { display: flex; border: 0; gap: 6px; }
+.filt-panel .seg button { border: 1px solid var(--black); }
+.filt-panel .seg button + button { border-left: 1px solid var(--black); }
+.filt-panel .seg[data-label]::before { display: none; }
+.filt-panel .receipt.on p { color: var(--g6); }
+.filt-panel .receipt.on p b { color: var(--black); }
+.fp-foot { display: flex; align-items: center; justify-content: flex-end; padding-top: 14px; }
+.fp-foot .receipt { padding: 0; flex: 1; }
+.fp-done { height: 32px; padding: 0 14px; border: 1px solid var(--black); background: var(--black); color: var(--white); font: 700 10px/1 var(--mono); letter-spacing: .12em; cursor: pointer; flex: none; margin-left: 16px; }
+.fp-row:last-of-type { border-bottom: 1px solid var(--hair); }

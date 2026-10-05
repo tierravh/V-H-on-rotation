@@ -21,30 +21,39 @@
       <span class="brand-name">ON ROTATION</span>
     </a>
     <span class="fpo" title="Proof of concept. Content is real, workflow is not built yet.">PROOF OF CONCEPT</span>
-    <nav class="nav" aria-label="Sections">
-      <a href="#topline" data-nav="topline"><span>01</span> TOPLINE</a>
-      <a href="#board" data-nav="board"><span>02</span> BOARD</a>
-      <a href="#hooks" data-nav="hooks"><span>03</span> HOOKS</a>
-      <a href="#reel" data-nav="reel"><span>04</span> REEL</a>
-      <a href="#motion" data-nav="motion" data-deep><span>05</span> IN MOTION</a>
-      <a href="#charts" data-nav="charts" data-deep><span>06</span> CHARTS</a>
-      <a href="#bsides" data-nav="bsides" data-deep><span>07</span> B-SIDES</a>
-      <a href="#headphones" data-nav="headphones" data-deep><span>08</span> HEADPHONES</a>
-      <a href="#kit" data-nav="kit"><span>09</span> KIT</a>
-      <a href="#dates" data-nav="dates" data-deep><span>10</span> DATES</a>
-      <a href="#liner" data-nav="liner"><span>11</span> NOTES</a>
-    </nav>
-  </div>
-  <div class="controls" role="toolbar" aria-label="Filters">
-    <div class="seg" id="citySeg" aria-label="City" data-label="CITY"></div>
-    <div class="seg lens" id="lensSeg" aria-label="Team" data-label="TEAM"></div>
-    <div class="tuned" id="tuned" hidden></div>
-    <div class="seg mode" id="modeSeg" aria-label="How much to show">
-      <button type="button" data-mode="quick">QUICK HIT</button>
-      <button type="button" data-mode="full" aria-pressed="true">FULL SET</button>
+    <div class="tools">
+      <div class="dd">
+        <button type="button" class="dd-btn" id="secBtn" aria-expanded="false" aria-controls="secPanel"><span class="dd-k">SECTION</span><span id="secNow">01 TOPLINE</span><i class="car" aria-hidden="true"></i></button>
+        <nav class="dd-panel sec-panel" id="secPanel" aria-label="Sections" hidden>
+          <a href="#topline" data-nav="topline"><span>01</span> TOPLINE</a>
+          <a href="#board" data-nav="board"><span>02</span> THE BOARD</a>
+          <a href="#hooks" data-nav="hooks"><span>03</span> HOOKS</a>
+          <a href="#reel" data-nav="reel"><span>04</span> THE REEL</a>
+          <a href="#motion" data-nav="motion" data-deep><span>05</span> IN MOTION</a>
+          <a href="#charts" data-nav="charts" data-deep><span>06</span> THE CHARTS</a>
+          <a href="#bsides" data-nav="bsides" data-deep><span>07</span> B-SIDES</a>
+          <a href="#headphones" data-nav="headphones" data-deep><span>08</span> HEADPHONES</a>
+          <a href="#kit" data-nav="kit"><span>09</span> STUDIO KIT</a>
+          <a href="#dates" data-nav="dates" data-deep><span>10</span> TOUR DATES</a>
+          <a href="#liner" data-nav="liner"><span>11</span> LINER NOTES</a>
+        </nav>
+      </div>
+      <div class="dd">
+        <button type="button" class="dd-btn" id="filtBtn" aria-expanded="false" aria-controls="filtPanel"><span class="mini" aria-hidden="true"></span><span class="dd-k">VIEW</span><span id="filtNow">EVERYTHING</span><i class="car" aria-hidden="true"></i></button>
+        <div class="dd-panel filt-panel" id="filtPanel" role="dialog" aria-label="Filter the page" hidden>
+          <div class="fp-row"><p class="fp-k">CITY</p><p class="fp-h">Narrows every section to that market.</p><div class="seg" id="citySeg" aria-label="City"></div></div>
+          <div class="fp-row"><p class="fp-k">TEAM</p><p class="fp-h">Shows only your moves under each hook, plus your lines in the Reel and Studio Kit.</p><div class="seg lens" id="lensSeg" aria-label="Team"></div></div>
+          <div class="fp-row"><p class="fp-k">LENGTH</p><p class="fp-h">Quick Hit keeps the top three of each and hides the deep sections.</p><div class="seg mode" id="modeSeg" aria-label="How much to show">
+            <button type="button" data-mode="quick">QUICK HIT</button>
+            <button type="button" data-mode="full" aria-pressed="true">FULL SET</button>
+          </div></div>
+          <div class="fp-foot"><div class="receipt" id="receipt" aria-live="polite"></div><button type="button" class="fp-done" id="fpDone">DONE</button></div>
+        </div>
+      </div>
+      <button type="button" class="clear-btn" id="clearBtn" hidden aria-label="Clear filters">CLEAR</button>
     </div>
   </div>
-  <div class="receipt" id="receipt" aria-live="polite"></div>
+  <div class="tuned" id="tuned" hidden></div>
 </header>
 
 <main id="main">
