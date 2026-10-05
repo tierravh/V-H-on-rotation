@@ -256,6 +256,8 @@ body.quick [data-deep] { display: none !important; }
 
 /* ---------- in motion ---------- */
 .motion-list { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--black); }
+.motion-list li.mo-note { display: block; padding: 16px 0; }
+.mo-note p:not(.empty) { margin: 0; font-size: 15px; color: var(--g6); max-width: 70ch; }
 .motion-list li { display: grid; grid-template-columns: 48px 200px 1fr 1fr 150px; gap: 24px; align-items: start; padding: 22px 0; border-bottom: 1px solid var(--hair); }
 .mo-n { font: 400 22px/1 var(--head); }
 .mo-b h3 { font-size: 17px; }
@@ -452,3 +454,22 @@ body.quick [data-deep] { display: none !important; }
 .reel-group b { font: 700 11px/1 var(--mono); letter-spacing: .12em; color: var(--black); }
 .reel-card + .reel-group { margin-top: 12px; }
 .reel-art .credit { position: absolute; right: 8px; bottom: 8px; z-index: 2; background: var(--black); color: var(--white); font: 700 9px/1 var(--mono); letter-spacing: .1em; padding: 4px 6px; }
+
+/* filter receipt + section scope chips */
+.seg[data-label] { position: relative; }
+.controls .seg[data-label]::before { content: attr(data-label); align-self: center; padding: 0 10px; font: 700 10px/1 var(--mono); letter-spacing: .12em; color: var(--g6); border-right: 1px solid var(--black); height: 32px; display: inline-flex; align-items: center; }
+.receipt { display: flex; align-items: center; gap: 16px; padding: 10px 24px; border-top: 1px solid var(--hair); font-size: 13px; line-height: 1.4; }
+.receipt p { margin: 0; color: var(--g6); }
+.receipt p b { color: var(--black); font-weight: 600; }
+.receipt.on { background: var(--black); color: var(--white); }
+.receipt.on p, .receipt.on p b { color: var(--white); }
+.receipt button { margin-left: auto; height: 28px; padding: 0 12px; border: 1px solid currentColor; background: transparent; color: inherit; font: 700 10px/1 var(--mono); letter-spacing: .1em; cursor: pointer; flex: none; }
+.scope { display: inline-block; margin: 0 0 10px; padding: 5px 8px; font: 700 10px/1.2 var(--mono); letter-spacing: .1em; border: 1px solid var(--hair); color: var(--g6); }
+.scope.on { border-color: var(--black); background: var(--black); color: var(--white); }
+.dark .scope, .deep .scope { border-color: rgba(252,252,252,.4); color: rgba(252,252,252,.75); }
+.dark .scope.on, .deep .scope.on { background: var(--white); color: var(--black); border-color: var(--white); }
+.scope.pulse { animation: scopePulse .9s var(--ease, ease) 1; }
+@keyframes scopePulse { 0% { transform: translateY(-3px); box-shadow: 0 0 0 0 rgba(0,0,0,.4); } 100% { transform: none; box-shadow: 0 0 0 8px rgba(0,0,0,0); } }
+@media (max-width: 760px) { .receipt { padding: 10px 16px; font-size: 12px; } .controls .seg[data-label]::before { display: none; } }
+@media (prefers-reduced-motion: reduce) { .scope.pulse { animation: none; } }
+.reel-note { grid-column: 1 / -1; margin: 0 0 8px; font-size: 15px; color: var(--g6); }

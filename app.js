@@ -10,6 +10,9 @@
   const d8 = (iso) => { const [y, m, d] = iso.split("-").map(Number); return new Date(y, m - 1, d); };
   const short = (iso) => { const d = d8(iso); return `${MONTHS[d.getMonth()]} ${d.getDate()}`; };
   const CITY_CODE = { det: "DET 313", tor: "TOR 416", atl: "ATL 404", nat: "NATIONAL" };
+  const CITY_NAME = { det: "Detroit", tor: "Toronto", atl: "Atlanta", nat: "national" };
+  const inW = () => state.city === "all" ? "" : state.city === "nat" ? " nationally" : " in " + CITY_NAME[state.city];
+  const TEAM_NAME = { strategy: "Strategy + Insights", creative: "Creative", production: "Production" };
 
   const state = { city: "all", v: null, mode: "full", verdict: "all", kitV: "spirits", lens: "all" };
   const vname = (v) => (E.verticals[v] || (E.verticals_extra || {})[v] || "");
@@ -97,9 +100,9 @@
   function renderControls() {
     const opts = [["all", "ALL"], ["nat", "NATIONAL"], ["det", "DETROIT 313"], ["tor", "TORONTO 416"], ["atl", "ATLANTA 404"]];
     $("#citySeg").innerHTML = opts.map(([k, l]) => `<button type="button" data-city="${k}" aria-pressed="${state.city === k}">${l}</button>`).join("");
-    $$("#citySeg button").forEach((b) => b.addEventListener("click", () => { state.city = b.dataset.city; renderAll(); }));
+    $$("#citySeg button").forEach((b) => b.addEventListener("click", () => { state.city = b.dataset.city; renderAll(true); }));
     $("#lensSeg").innerHTML = [["all", "ALL TEAMS"], ["strategy", "STRATEGY + INSIGHTS"], ["creative", "CREATIVE"], ["production", "PRODUCTION"]].map(([k, l]) => `<button type="button" data-lens="${k}" aria-pressed="${state.lens === k}">${l}</button>`).join("");
-    $$("#lensSeg button").forEach((b) => b.addEventListener("click", () => { state.lens = b.dataset.lens; renderAll(); }));
+    $$("#lensSeg button").forEach((b) => b.addEventListener("click", () => { state.lens = b.dataset.lens; renderAll(true); }));
     const t = $("#tuned");
     if (state.v) {
       t.hidden = false;
@@ -110,6 +113,60 @@
     document.body.classList.toggle("quick", state.mode === "quick");
   }
   $$("#modeSeg button").forEach((b) => b.addEventListener("click", () => { state.mode = b.dataset.mode; renderAll(); }));
+
+
+  /* ---------- what the filters changed ---------- */
+  function scopeCounts() {
+    const lensOK = (r) => state.lens === "all" || state.lens === "strategy" || r.disc.includes(state.lens);
+    return {
+      hooks: [E.hooks.filter(match).length, E.hooks.length, "hooks"],
+      reel: [E.reel.filter(match).filter(lensOK).length, E.reel.length, "pieces"],
+      motion: [E.motion.filter((m) => !state.v || m.v === state.v).length, E.motion.length, "moves"],
+      charts: [E.charts.filter(match).length, E.charts.length, "trends"],
+      bsides: [E.bsides.filter(match).length + E.dropping.filter(match).length, E.bsides.length + E.dropping.length, "signals"],
+      headphones: [E.headphones.filter(match).length, E.headphones.length, "picks"],
+      dates: [E.calendar.filter(match).length, E.calendar.length, "dates"]
+    };
+  }
+  const TEAM_SECS = { hooks: "moves", reel: "work", kit: "lines" };
+  function renderScope(changed) {
+    const c = scopeCounts();
+    const where = state.city === "all" ? "" : CITY_CODE[state.city];
+    const team = state.lens === "all" ? "" : TEAM_NAME[state.lens];
+    $$("section.sec[data-sec]").forEach((sec) => {
+      const id = sec.dataset.sec;
+      const head = $(".sec-head .kicker", sec);
+      if (!head) return;
+      let chip = $(".scope", sec);
+      if (!chip) { chip = document.createElement("span"); chip.className = "scope"; head.after(chip); }
+      const parts = [];
+      if (c[id]) {
+        const [n, tot, noun] = c[id];
+        if (id === "motion" && where && state.city !== "nat") parts.push(`NATIONAL / APPLIES TO ${where}`);
+        else if (id === "reel" && where && state.city !== "nat" && !n) parts.push(`NO ${where} WORK / SHOWING NATIONAL`);
+        else if (where || state.v) parts.push(`${where ? where + " / " : ""}${n} OF ${tot} ${noun.toUpperCase()}`);
+        else parts.push(`ALL ${tot} ${noun.toUpperCase()}`);
+      }
+      if (id === "kit" && where) parts.push("SAME IN EVERY CITY");
+      if (team && TEAM_SECS[id]) parts.push(`${team.toUpperCase()} ${TEAM_SECS[id].toUpperCase()} ONLY`);
+      chip.textContent = parts.join("  +  ");
+      chip.hidden = !parts.length;
+      chip.classList.toggle("on", !!(where || team || state.v));
+      if (changed && chip.classList.contains("on")) { chip.classList.remove("pulse"); void chip.offsetWidth; chip.classList.add("pulse"); }
+    });
+    const r = $("#receipt");
+    if (!where && !team && !state.v) {
+      r.innerHTML = `<p><b>How this works.</b> Pick a city to narrow every section to that market. Pick a team to see only your moves under each hook, plus your lines in the Reel and Studio Kit. Each section header shows what it's filtered to.</p>`;
+      r.classList.remove("on");
+    } else {
+      const label = [where && CITY_NAME[state.city] === "national" ? "National" : where && CITY_NAME[state.city], state.v && vname(state.v), team].filter(Boolean).join(" + ");
+      const NOUN = { hooks: ["hook", "hooks"], charts: ["chart trend", "chart trends"], headphones: ["listen", "listens"], dates: ["date", "dates"] };
+      const line = ["hooks", "charts", "headphones", "dates"].map((k) => `${c[k][0]} ${NOUN[k][c[k][0] === 1 ? 0 : 1]}`).join(", ");
+      r.innerHTML = `<p><b>Showing ${esc(label)}.</b> ${line}.${team ? ` Hooks now show only ${esc(team)} moves.` : ""}</p><button type="button" id="resetAll">RESET</button>`;
+      r.classList.add("on");
+      $("#resetAll").addEventListener("click", () => { state.city = "all"; state.lens = "all"; state.v = null; renderAll(true); });
+    }
+  }
 
   /* ---------- hero ---------- */
   function renderHero() {
@@ -170,7 +227,13 @@
 
   /* ---------- reel ---------- */
   function renderReel() {
-    let list = E.reel.filter(match).filter((r) => state.lens === "all" || state.lens === "strategy" || r.disc.includes(state.lens));
+    const lensOK = (r) => state.lens === "all" || state.lens === "strategy" || r.disc.includes(state.lens);
+    let list = E.reel.filter(match).filter(lensOK);
+    let reelNote = "";
+    if (!list.length && state.city !== "all" && state.city !== "nat") {
+      list = E.reel.filter(inV).filter((r) => (r.city || []).includes("nat")).filter(lensOK);
+      if (list.length) reelNote = `<p class="reel-note">No ${esc(CITY_NAME[state.city])} work on the reel this edition, so here's the national work. All of it travels.</p>`;
+    }
     if (state.mode === "quick") list = list.slice(0, 3);
     let n = 0;
     const card = (r) => `<a class="reel-card" href="${esc(r.url)}" target="_blank" rel="noopener">
@@ -183,17 +246,19 @@
     </a>`;
     const work = list.filter((r) => r.kind === "work"), shifts = list.filter((r) => r.kind !== "work");
     const group = (label, note, items) => items.length ? `<p class="reel-group"><b>${label}</b>${note}</p>${items.map(card).join("")}` : "";
-    $("#reelGrid").innerHTML = list.length ? group("THE WORK", "Campaigns and the people who made them", work) + group("THE SHIFTS", "Changes in platforms, production models and design with no single piece to show", shifts) : `<p class="empty">Nothing on the reel for this filter.</p>`;
+    $("#reelGrid").innerHTML = list.length ? reelNote + group("THE WORK", "Campaigns and the people who made them", work) + group("THE SHIFTS", "Changes in platforms, production models and design with no single piece to show", shifts) : `<p class="empty">Nothing on the reel for this filter.</p>`;
   }
 
   /* ---------- in motion ---------- */
   function renderMotion() {
-    const list = E.motion.filter((m) => !state.v || m.v === state.v).filter(() => state.city === "all" || state.city === "nat");
-    $("#motionList").innerHTML = list.length ? list.map((m, i) => `<li><span class="mo-n">${pad(i + 1)}</span>
+    const list = E.motion.filter((m) => !state.v || m.v === state.v);
+    const local = state.city !== "all" && state.city !== "nat";
+    const note = local && list.length ? `<li class="mo-note"><p>Nothing in this list is specific to ${esc(CITY_NAME[state.city])}. These are national moves, so they still count when you're pitching there.</p></li>` : "";
+    $("#motionList").innerHTML = list.length ? note + list.map((m, i) => `<li><span class="mo-n">${pad(i + 1)}</span>
       <div class="mo-b"><h3>${esc(m.brand)}</h3><p class="mo-v">${esc(vname(m.v).toUpperCase())}</p></div>
       <p class="mo-what">${esc(m.what)}</p>
       <p class="mo-door"><b>THE DOOR</b>${esc(m.door)}</p>
-      <p class="mo-src"><a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.source)}</a> <time datetime="${m.date}">${short(m.date)}</time></p></li>`).join("") : `<li><p class="empty">National brand moves show under All or National.</p></li>`;
+      <p class="mo-src"><a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.source)}</a> <time datetime="${m.date}">${short(m.date)}</time></p></li>`).join("") : `<li class="mo-note"><p class="empty">No national moves for ${esc(vname(state.v))} this edition.</p></li>`;
   }
 
   /* ---------- charts ---------- */
@@ -235,8 +300,8 @@
   /* ---------- b-sides / dropping ---------- */
   function renderSides() {
     const b = E.bsides.filter(match), d = E.dropping.filter(match);
-    $("#bsideList").innerHTML = b.length ? b.map((x) => `<div class="note"><p class="nk">${esc(vname(x.v).toUpperCase())} / ${x.city.map((c) => CITY_CODE[c]).join(" + ")}</p><h3>${esc(x.title)}</h3><p>${esc(x.why)}</p><p><b>WATCH FOR</b>${esc(x.watch)}</p>${srcs(x.sources)}</div>`).join("") : `<p class="empty">No early signals for this filter.</p>`;
-    $("#dropList").innerHTML = d.length ? d.map((x) => `<div class="note drop"><p class="nk">${esc(vname(x.v).toUpperCase())} / ${x.city.map((c) => CITY_CODE[c]).join(" + ")}</p><h3>${esc(x.title)}</h3><p>${esc(x.evidence)}</p><p><b>COUNTERPOINT</b>${esc(x.counter)}</p><p><b>INSTEAD</b>${esc(x.instead)}</p>${srcs(x.sources)}</div>`).join("") : `<p class="empty">Nothing fading for this filter.</p>`;
+    $("#bsideList").innerHTML = b.length ? b.map((x) => `<div class="note"><p class="nk">${esc(vname(x.v).toUpperCase())} / ${x.city.map((c) => CITY_CODE[c]).join(" + ")}</p><h3>${esc(x.title)}</h3><p>${esc(x.why)}</p><p><b>WATCH FOR</b>${esc(x.watch)}</p>${srcs(x.sources)}</div>`).join("") : `<p class="empty">No early signals${inW()} this edition.</p>`;
+    $("#dropList").innerHTML = d.length ? d.map((x) => `<div class="note drop"><p class="nk">${esc(vname(x.v).toUpperCase())} / ${x.city.map((c) => CITY_CODE[c]).join(" + ")}</p><h3>${esc(x.title)}</h3><p>${esc(x.evidence)}</p><p><b>COUNTERPOINT</b>${esc(x.counter)}</p><p><b>INSTEAD</b>${esc(x.instead)}</p>${srcs(x.sources)}</div>`).join("") : `<p class="empty">Nothing fading${inW()} this edition.</p>`;
   }
 
   /* ---------- headphones ---------- */
@@ -251,7 +316,7 @@
       <div><p class="sk"><span>${esc(h.type.toUpperCase())}</span><span>${esc(h.show)}</span><span>${short(h.date)}</span><span>${h.mins} MIN</span><span>${h.city.map((c) => CITY_CODE[c]).join(" + ")}</span></p>
       <h3>${esc(h.title)}</h3><p>${esc(h.why)}</p></div>
       <span class="verdict ${h.verdict}">${VERD[h.verdict]}</span>
-    </a>`).join("") : `<p class="empty">Nothing to play for this filter.</p>`;
+    </a>`).join("") : `<p class="empty">Nothing to play${inW()} this edition.</p>`;
   }
 
   /* ---------- kit ---------- */
@@ -272,7 +337,7 @@
       return `<li><span class="d">${short(c.date)}${c.end ? ` TO ${d8(c.end).getDate()}` : ""}<small>${DAYS[d.getDay()]}</small></span>
       <span class="t"><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.title)}</a><span>${esc(c.note)}</span></span>
       <span class="v">${esc(vname(c.v))}</span><span class="c">${c.city.map((x) => CITY_CODE[x]).join(" + ")}</span></li>`;
-    }).join("") : `<li><p class="empty">No dates for this filter.</p></li>`;
+    }).join("") : `<li><p class="empty">No dates${inW()} yet.</p></li>`;
   }
 
   /* ---------- liner notes ---------- */
@@ -306,8 +371,8 @@
     $$("[data-sec]").forEach((s) => io.observe(s));
   }
 
-  function renderAll() {
-    renderControls(); renderBoard(); renderHooks(); renderReel(); renderMotion(); renderCharts(); renderSides(); renderHeadphones(); renderKit(); renderDates();
+  function renderAll(changed) {
+    renderControls(); renderBoard(); renderHooks(); renderReel(); renderMotion(); renderCharts(); renderSides(); renderHeadphones(); renderKit(); renderDates(); renderScope(changed);
   }
   renderHero(); renderLiner(); renderAll(); navSpy();
 })();

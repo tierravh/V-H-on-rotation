@@ -36,14 +36,15 @@
     </nav>
   </div>
   <div class="controls" role="toolbar" aria-label="Filters">
-    <div class="seg" id="citySeg" aria-label="City"></div>
-    <div class="seg lens" id="lensSeg" aria-label="Lens"></div>
+    <div class="seg" id="citySeg" aria-label="City" data-label="CITY"></div>
+    <div class="seg lens" id="lensSeg" aria-label="Team" data-label="TEAM"></div>
     <div class="tuned" id="tuned" hidden></div>
     <div class="seg mode" id="modeSeg" aria-label="How much to show">
       <button type="button" data-mode="quick">QUICK HIT</button>
       <button type="button" data-mode="full" aria-pressed="true">FULL SET</button>
     </div>
   </div>
+  <div class="receipt" id="receipt" aria-live="polite"></div>
 </header>
 
 <main id="main">
