@@ -191,7 +191,8 @@
     if (state.v) bits.push(vname(state.v).toUpperCase());
     if (state.lens !== "all") bits.push(TEAM_NAME[state.lens].toUpperCase());
     if (state.mode === "quick") bits.push("QUICK HIT");
-    $("#filtNow").textContent = bits.length ? bits.join(" / ") : "EVERYTHING";
+    $("#filtNow").textContent = bits.length ? bits.join(" / ") : "ALL CITIES / ALL TEAMS";
+    $("#secBtn .k-long").textContent = `JUMP TO / ${state.mode === "quick" ? $$("#secPanel a:not([data-deep])").length : 11} SECTIONS`;
     $("#filtBtn").classList.toggle("active", bits.length > 0);
     $("#clearBtn").hidden = !bits.length;
   }
