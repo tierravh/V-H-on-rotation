@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>On Rotation / Verse + Hook</title>
+<meta name="description" content="On Rotation. A cultural intelligence board for Verse + Hook across 12 verticals and three cities. Proof of concept.">
+<link rel="icon" href="assets/brand/mono-black.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Space+Mono:wght@400;700&family=Special+Gothic+Expanded+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top" id="top">
+  <div class="top-row">
+    <a class="brand" href="#topline" aria-label="On Rotation by Verse + Hook">
+      <img src="assets/brand/mono-black.svg" alt="V+H" width="58" height="24">
+      <span class="brand-name">ON ROTATION</span>
+    </a>
+    <span class="fpo" title="Proof of concept. Content is real, workflow is not built yet.">PROOF OF CONCEPT</span>
+    <nav class="nav" aria-label="Sections">
+      <a href="#topline" data-nav="topline"><span>01</span> TOPLINE</a>
+      <a href="#board" data-nav="board"><span>02</span> BOARD</a>
+      <a href="#hooks" data-nav="hooks"><span>03</span> HOOKS</a>
+      <a href="#reel" data-nav="reel"><span>04</span> REEL</a>
+      <a href="#motion" data-nav="motion" data-deep><span>05</span> IN MOTION</a>
+      <a href="#charts" data-nav="charts" data-deep><span>06</span> CHARTS</a>
+      <a href="#bsides" data-nav="bsides" data-deep><span>07</span> B-SIDES</a>
+      <a href="#headphones" data-nav="headphones" data-deep><span>08</span> HEADPHONES</a>
+      <a href="#kit" data-nav="kit"><span>09</span> KIT</a>
+      <a href="#dates" data-nav="dates" data-deep><span>10</span> DATES</a>
+      <a href="#liner" data-nav="liner"><span>11</span> NOTES</a>
+    </nav>
+  </div>
+  <div class="controls" role="toolbar" aria-label="Filters">
+    <div class="seg" id="citySeg" aria-label="City"></div>
+    <div class="seg lens" id="lensSeg" aria-label="Lens"></div>
+    <div class="tuned" id="tuned" hidden></div>
+    <div class="seg mode" id="modeSeg" aria-label="How much to show">
+      <button type="button" data-mode="quick">QUICK HIT</button>
+      <button type="button" data-mode="full" aria-pressed="true">FULL SET</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="topline" data-sec="topline">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="kicker" id="edMeta"></p>
+        <h1 id="toplineLine"></h1>
+        <p class="lede" id="toplineDek"></p>
+        <div class="hero-cta">
+          <a class="btn btn-solid" href="#board">PICK A VERTICAL</a>
+          <a class="btn" href="#liner">HOW EVERY TEAM USES THIS</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="ha-sleeve">
+          <span class="disc spin"></span>
+          <div class="ha-cover"><img src="assets/og/outkast.jpg" alt=""><span class="ha-top"><span>ON ROTATION</span><span>NATIONAL PLAY</span></span><span class="ha-title">LOCAL<br>PROOF</span></div>
+        </div>
+        <img class="ha-mark m-det" src="assets/marks/det.png" alt="">
+        <img class="ha-mark m-tor" src="assets/marks/tor.png" alt="">
+        <img class="ha-mark m-atl" src="assets/marks/atl.png" alt="">
+        <img class="ha-photo" src="assets/photo/vinyl.jpg" alt="">
+      </div>
+    </div>
+    <div class="wrap">
+      <p class="label three-label">THE 3 TO KNOW</p>
+      <ol class="three" id="three"></ol>
+    </div>
+    <div class="ticker" aria-label="Headlines"><div class="ticker-track" id="ticker"></div></div>
+  </section>
+
+  <section class="board sec" id="board" data-sec="board">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="kicker">02 / THE BOARD</p>
+        <h2>Twelve verticals. Pick one.</h2>
+        <p class="lede">Each record is a vertical. The track count is how many items it has for where you are looking: national, or one of our three cities. Click a record to tune the whole page to it. Click it again, or hit clear, to go back to everything.</p>
+      </div>
+      <div id="sides"></div>
+    </div>
+  </section>
+
+  <section class="hooks sec" id="hooks" data-sec="hooks">
+    <div class="wrap">
+      <div class="sec-head row-head">
+        <div><p class="kicker">03 / HOOKS</p><h2>The stories worth repeating</h2></div>
+        <p class="lede">What happened, why it matters and what it means for each team, including the number insights should keep an eye on. Use the team filter up top to see just yours. Every item has a date and a source.</p>
+      </div>
+      <div id="hookLead"></div>
+      <div class="hook-grid" id="hookGrid"></div>
+    </div>
+  </section>
+
+  <section class="reel sec soft" id="reel" data-sec="reel">
+    <div class="wrap">
+      <div class="sec-head row-head">
+        <div><p class="kicker">04 / THE REEL</p><h2>Work and craft worth stealing</h2></div>
+        <p class="lede">Campaigns, formats, tools and production moves from this week, picked for creative development and production. Each one ends with the part worth taking.</p>
+      </div>
+      <div class="reel-grid" id="reelGrid"></div>
+    </div>
+  </section>
+
+  <section class="motion sec" id="motion" data-sec="motion" data-deep>
+    <div class="wrap">
+      <div class="sec-head row-head">
+        <div><p class="kicker">05 / IN MOTION</p><h2>National brands on the move</h2></div>
+        <p class="lede">New CMOs, new agencies and new briefs at national brands. These are signals, not leads, so check before anyone reaches out.</p>
+      </div>
+      <ol class="motion-list" id="motionList"></ol>
+    </div>
+  </section>
+
+  <section class="charts sec dark" id="charts" data-sec="charts" data-deep>
+    <div class="wrap">
+      <div class="sec-head row-head">
+        <div><p class="kicker">06 / THE CHARTS</p><h2>Where every trend sits</h2></div>
+        <p class="lede">Five stages, borrowed from the charts. New Entry is just showing up. Climbing has proof and momentum. Peak is everywhere. Recurrent keeps coming back. Dropping is losing steam. Tap a track for the evidence and the counterpoint.</p>
+      </div>
+      <div class="chart-cols" id="chartCols"></div>
+    </div>
+  </section>
+
+  <section class="bsides sec" id="bsides" data-sec="bsides" data-deep>
+    <div class="wrap two-col">
+      <div>
+        <p class="kicker">07 / B-SIDES</p>
+        <h2>Early signals</h2>
+        <p class="lede">Small, early and worth watching. Too soon to pitch, so keep it in your back pocket.</p>
+        <div id="bsideList" class="stack"></div>
+      </div>
+      <div>
+        <p class="kicker">07 / DROPPING OFF</p>
+        <h2>Losing steam</h2>
+        <p class="lede">Approaches to stop leading with, and what to use instead.</p>
+        <div id="dropList" class="stack"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="headphones sec soft" id="headphones" data-sec="headphones" data-deep>
+    <div class="wrap">
+      <div class="sec-head row-head">
+        <div><p class="kicker">08 / HEADPHONES</p><h2>Listen, watch, skip</h2></div>
+        <p class="lede">Free podcasts, video and local shows from Detroit, Toronto, Atlanta and national outlets. Each one is triaged so you know where your time goes. Skips stay on the list, dimmed, so you can see what we passed on.</p>
+      </div>
+      <div class="seg verdicts" id="verdictSeg" aria-label="Verdict"></div>
+      <div class="singles" id="singles"></div>
+    </div>
+  </section>
+
+  <section class="kit sec deep" id="kit" data-sec="kit">
+    <div class="wrap">
+      <div class="sec-head row-head">
+        <div><p class="kicker">09 / STUDIO KIT</p><h2>Walk in ready</h2></div>
+        <p class="lede">For each vertical: the strategic point of view, a creative territory, a production idea, a question to open the room and research we could sell. Pick a vertical to switch.</p>
+      </div>
+      <div class="kit-tabs" id="kitTabs" role="tablist"></div>
+      <div class="kit-body" id="kitBody"></div>
+    </div>
+  </section>
+
+  <section class="dates sec" id="dates" data-sec="dates" data-deep>
+    <div class="wrap">
+      <div class="sec-head row-head">
+        <div><p class="kicker">10 / TOUR DATES</p><h2>What's coming up</h2></div>
+        <p class="lede">Dates our clients could show up for, or work around, through November.</p>
+      </div>
+      <ol class="date-list" id="dateList"></ol>
+    </div>
+  </section>
+
+  <section class="liner sec dark" id="liner" data-sec="liner">
+    <div class="wrap">
+      <div class="liner-head">
+        <div>
+          <p class="kicker">11 / LINER NOTES</p>
+          <h2>How every team uses this</h2>
+          <p class="lede">This is a proof of concept for the whole company, across strategy, creative development, production and the people who run our clients and new business. The content is real and sourced as of October 5, 2026. The workflow behind it is not built yet. Here is how each team could use it, and what we still need to decide together.</p>
+          <span class="fpo fpo-lg">PROOF OF CONCEPT / NOTHING HERE IS AUTOMATED YET</span>
+        </div>
+        <img class="liner-photo" src="assets/photo/studio.jpg" alt="The V+H team at work in the studio">
+      </div>
+      <div class="liner-grid" id="liner-grid"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-row">
+    <img src="assets/brand/oneline-allwhite.svg" alt="Verse + Hook" class="foot-logo">
+    <p class="foot-line">Anyone can get a first listen. We build brands worth playing again.</p>
+    <p class="foot-meta">ON ROTATION / EDITION 01 / OCT 5 2026 / DETROIT 313 / TORONTO 416 / ATLANTA 404</p>
+  </div>
+</footer>
+
+<script src="data/bundle.js"></script>
+<script src="app.js"></script>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://perplexity.localhost","http://localhost:1420","http://127.0.0.1:1420","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  const DEFAULT_LINE_HEIGHT = 16;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="position:relative;left:-${scrollX}px;top:-${scrollY}px">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_BY") {
+      const { deltaX, deltaY, deltaMode } = event.data;
+      if (!scrollForwarding || !Number.isFinite(deltaX) || !Number.isFinite(deltaY)) return;
+      if (deltaMode !== 0 && deltaMode !== 1 && deltaMode !== 2) return;
+      const lineHeight =
+        parseFloat(getComputedStyle(document.documentElement).lineHeight) || DEFAULT_LINE_HEIGHT;
+      const scaleX = deltaMode === 1 ? lineHeight : deltaMode === 2 ? window.innerWidth : 1;
+      const scaleY = deltaMode === 1 ? lineHeight : deltaMode === 2 ? window.innerHeight : 1;
+      // The selection overlay receives the wheel event instead of this iframe.
+      // Instant scrolling preserves trackpad deltas even on smooth-scroll sites.
+      window.scrollBy({ left: deltaX * scaleX, top: deltaY * scaleY, behavior: "instant" });
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>
