@@ -1377,7 +1377,10 @@
    "steal": "A full loop with no hero film: owned data, a participation mechanic, refreshable media and a physical finale.",
    "source": "Engage Positive",
    "url": "https://engagepositive.com/news/hoka-strava-run-your-city-nyc-dooh-campaign/",
-   "date": "2026-09-04"
+   "date": "2026-09-04",
+   "image": "assets/og/hoka.jpg",
+   "credit": "Engage Positive",
+   "kind": "work"
   },
   {
    "id": "kfc",
@@ -1396,7 +1399,9 @@
    "source": "Adweek",
    "url": "https://www.adweek.com/creativity/ads-of-the-week-10-campaigns-that-caught-our-eye-from-on-to-kfc/",
    "date": "2026-10-02",
-   "image": "assets/og/kfc.jpg"
+   "image": "assets/og/kfc2.jpg",
+   "credit": "B9",
+   "kind": "work"
   },
   {
    "id": "on",
@@ -1414,7 +1419,10 @@
    "steal": "Cast against the category's usual look and the audience notices.",
    "source": "Adweek",
    "url": "https://www.adweek.com/creativity/ads-of-the-week-10-campaigns-that-caught-our-eye-from-on-to-kfc/",
-   "date": "2026-10-02"
+   "date": "2026-10-02",
+   "image": "assets/og/on.jpg",
+   "credit": "Adweek",
+   "kind": "work"
   },
   {
    "id": "chilis",
@@ -1432,7 +1440,10 @@
    "steal": "Merch that laughs with the brand's own audience gets worn.",
    "source": "Adweek",
    "url": "https://www.adweek.com/creativity/ads-of-the-week-10-campaigns-that-caught-our-eye-from-on-to-kfc/",
-   "date": "2026-10-02"
+   "date": "2026-10-02",
+   "image": "assets/og/chilis.jpg",
+   "credit": "Chili's / PR Newswire",
+   "kind": "work"
   },
   {
    "id": "beekeeper",
@@ -1448,27 +1459,12 @@
    ],
    "what": "Hand-drawn illustration, AI and compositing bring real customer stories to life.",
    "steal": "AI works best as one layer in a handmade process, not as the whole process.",
-   "source": "shots",
-   "url": "https://shots.net/the-news",
-   "date": "2026-09-30"
-  },
-  {
-   "id": "iglive",
-   "title": "Instagram lets you boost a livestream while it's live",
-   "brand": "Instagram",
-   "agency": "Platform update",
-   "disc": [
-    "production"
-   ],
-   "v": "music",
-   "city": [
-    "nat"
-   ],
-   "what": "The live video itself becomes the ad across Feed, Stories and Reels, and runs only while the stream is on. Instagram recommends scheduling at least two hours ahead.",
-   "steal": "Listening parties, studio sessions and launches can now be paid media without a full campaign setup.",
-   "source": "Music Ally",
-   "url": "https://musically.com/2026/10/02/instagram-adds-in-app-boosting-for-artist-livestreams/",
-   "date": "2026-10-02"
+   "source": "The Howler",
+   "url": "https://thehowler.news/beekeepers-naturals-champions-everyday-users-in-animated-series-produced-by-fin-studios",
+   "date": "2026-09-29",
+   "image": "assets/og/bee.jpg",
+   "credit": "The Howler",
+   "kind": "work"
   },
   {
    "id": "koh",
@@ -1486,7 +1482,29 @@
    "steal": "Creator-directors are now on production rosters. Build them into treatments early.",
    "source": "Stash",
    "url": "https://www.stashmedia.tv/category/theinbox/",
-   "date": "2026-10-03"
+   "date": "2026-10-03",
+   "image": "assets/og/koh.jpg",
+   "credit": "Stash",
+   "kind": "work"
+  },
+  {
+   "id": "iglive",
+   "title": "Instagram lets you boost a livestream while it's live",
+   "brand": "Instagram",
+   "agency": "Platform update",
+   "disc": [
+    "production"
+   ],
+   "v": "music",
+   "city": [
+    "nat"
+   ],
+   "what": "The live video itself becomes the ad across Feed, Stories and Reels, and runs only while the stream is on. Instagram recommends scheduling at least two hours ahead.",
+   "steal": "Listening parties, studio sessions and launches can now be paid media without a full campaign setup.",
+   "source": "Music Ally",
+   "url": "https://musically.com/2026/10/02/instagram-adds-in-app-boosting-for-artist-livestreams/",
+   "date": "2026-10-02",
+   "kind": "shift"
   },
   {
    "id": "roster",
@@ -1505,7 +1523,8 @@
    "steal": "There are new ways to staff a shoot. Midwest representation matters for Detroit-based production.",
    "source": "shots",
    "url": "https://shots.net/the-news",
-   "date": "2026-09-30"
+   "date": "2026-09-30",
+   "kind": "shift"
   },
   {
    "id": "type",
@@ -1523,7 +1542,8 @@
    "steal": "Pull type and texture from a place's own signs and archives. That is specificity you can see.",
    "source": "Figuree",
    "url": "https://figureestudio.com/2026/09/10/typography-trends-late-2026/",
-   "date": "2026-09-10"
+   "date": "2026-09-10",
+   "kind": "shift"
   }
  ],
  "motion": [

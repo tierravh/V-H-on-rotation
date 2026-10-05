@@ -172,14 +172,18 @@
   function renderReel() {
     let list = E.reel.filter(match).filter((r) => state.lens === "all" || state.lens === "strategy" || r.disc.includes(state.lens));
     if (state.mode === "quick") list = list.slice(0, 3);
-    $("#reelGrid").innerHTML = list.length ? list.map((r, i) => `<a class="reel-card" href="${esc(r.url)}" target="_blank" rel="noopener">
-      <div class="reel-art${r.image ? "" : " gen"}">${r.image ? `<img src="${esc(r.image)}" alt="">` : `<span class="reel-n">${pad(i + 1)}</span>`}<span class="reel-tags">${r.disc.map((d) => `<b>${LENS[d]}</b>`).join("")}</span></div>
+    let n = 0;
+    const card = (r) => `<a class="reel-card" href="${esc(r.url)}" target="_blank" rel="noopener">
+      <div class="reel-art${r.image ? "" : " gen"}">${r.image ? `<img src="${esc(r.image)}" alt=""><span class="credit">IMAGE: ${esc(r.credit.toUpperCase())}</span>` : `<span class="reel-n">${pad(++n)}</span>`}<span class="reel-tags">${r.disc.map((d) => `<b>${LENS[d]}</b>`).join("")}</span></div>
       <p class="reel-k">${esc(r.brand.toUpperCase())} / ${esc(r.agency)}</p>
       <h3>${esc(r.title)}</h3>
       <p class="reel-what">${esc(r.what)}</p>
       <p class="reel-steal"><b>STEAL THIS</b>${esc(r.steal)}</p>
       <p class="reel-src">${esc(r.source)} <time datetime="${r.date}">${short(r.date)}</time></p>
-    </a>`).join("") : `<p class="empty">Nothing on the reel for this filter.</p>`;
+    </a>`;
+    const work = list.filter((r) => r.kind === "work"), shifts = list.filter((r) => r.kind !== "work");
+    const group = (label, note, items) => items.length ? `<p class="reel-group"><b>${label}</b>${note}</p>${items.map(card).join("")}` : "";
+    $("#reelGrid").innerHTML = list.length ? group("THE WORK", "Campaigns and the people who made them", work) + group("THE SHIFTS", "Changes in platforms, production models and design with no single piece to show", shifts) : `<p class="empty">Nothing on the reel for this filter.</p>`;
   }
 
   /* ---------- in motion ---------- */
